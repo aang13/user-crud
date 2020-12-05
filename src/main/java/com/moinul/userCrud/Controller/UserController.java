@@ -1,11 +1,15 @@
 package com.moinul.userCrud.Controller;
 
+import com.moinul.userCrud.DTO.ChildDTO;
+import com.moinul.userCrud.DTO.ParentDTO;
 import com.moinul.userCrud.Model.User;
 import com.moinul.userCrud.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -19,29 +23,41 @@ public class UserController {
     }
 
     @PostMapping(value ="user/create/parent", produces = MediaType.APPLICATION_JSON_VALUE)
-    public User createParentUser(@Validated  @RequestBody User user)
+    public User createParentUser(@Validated  @RequestBody ParentDTO parentDTO)
     {
-        return userService.createParentUser(user);
+        return userService.createParentUser(parentDTO);
     }
 
     @PostMapping(value ="user/create/child/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public User createChildUser(@Validated  @RequestBody User user, @PathVariable(name = "id")long parentId)
+    public User createChildUser(@Validated  @RequestBody ChildDTO childDTO,@PathVariable("id")Long parentId)
     {
-        return userService.createChildUser(user,parentId);
+
+        return userService.createChildUser(childDTO,parentId);
     }
 
-    @PutMapping(value ="user/update",produces = MediaType.APPLICATION_JSON_VALUE)
-    public User updateUser(@Validated  @RequestBody User user)
+    @PutMapping(value ="user/update/parent", produces = MediaType.APPLICATION_JSON_VALUE)
+    public User updateParentUser(@Validated  @RequestBody ParentDTO parentDTO)
     {
-        return userService.updateUser(user);
+        return userService.updateParentUser(parentDTO);
     }
 
-    @DeleteMapping(name="user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteUser(@PathVariable long id){
+    @PutMapping(value ="user/update/child", produces = MediaType.APPLICATION_JSON_VALUE)
+    public User updateChildUser(@Validated  @RequestBody ChildDTO childDTO)
+    {
+
+        return userService.updateChildUser(childDTO);
+    }
+
+    @DeleteMapping(value="user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteUser(@PathVariable("id")Long id){
         userService.deleteUser(id);
     }
 
 
+    @GetMapping(value="user", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<User> getAllUser(){
+        return userService.getAllUser();
+    }
 
 
 }

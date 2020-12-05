@@ -10,7 +10,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -25,10 +25,10 @@ public class User {
     private String city;
 
    @Column(name = "street")
-    private long street;
+    private Long street;
 
    @Column(name="zip")
-    private long zip;
+    private Long zip;
 
     @Enumerated(EnumType.STRING)
    @Column(name="type")
@@ -52,7 +52,7 @@ public class User {
 
 
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -72,11 +72,11 @@ public class User {
         this.city = city;
     }
 
-    public void setStreet(long street) {
+    public void setStreet(Long street) {
         this.street = street;
     }
 
-    public void setZip(long zip) {
+    public void setZip(Long zip) {
         this.zip = zip;
     }
 
@@ -84,7 +84,7 @@ public class User {
         this.type = type;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -104,11 +104,11 @@ public class User {
         return city;
     }
 
-    public long getStreet() {
+    public Long getStreet() {
         return street;
     }
 
-    public long getZip() {
+    public Long getZip() {
         return zip;
     }
 
