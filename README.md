@@ -1,1 +1,19 @@
-# user-crud
+**Requirements**\
+for building and running the application you need:\
+JDK 11\
+Maven 3
+
+**Running the application locally** \
+You can use any IDE that support Spring boot and run from there.\
+Alternatively you can use Spring Boot maven plugin like so:\
+`mvn spring-boot:run`
+
+Once the application is run you can access all the Rest end points via _swagger_.
+To see the full list of apis browse:
+`http://localhost:8080/swagger-ui.html`
+
+Here are the list of apis.
+![alt text](https://user-images.githubusercontent.com/32796511/101288149-2c1a6100-381f-11eb-803c-50eecf721386.png)
+
+**Database**\
+H2 database: in memory database for spring boot application.Note that the in-memory database is volatile, and data will be lost when we restart the application.

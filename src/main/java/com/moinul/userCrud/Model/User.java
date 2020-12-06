@@ -12,16 +12,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "first_name")
+
+    @Column(name = "first_name",length = 25)
     private String firstName;
 
-    @Column(name="last_name")
+    @Column(name="last_name",length = 25)
     private String lastName;
 
-    @Column(name="state")
+    @Column(name="state",length = 30)
     private String state;
 
-    @Column(name="city")
+    @Column(name="city",length = 30)
     private String city;
 
    @Column(name = "street")
@@ -30,7 +31,7 @@ public class User {
    @Column(name="zip")
     private Long zip;
 
-    @Enumerated(EnumType.STRING)
+   @Enumerated(EnumType.STRING)
    @Column(name="type")
     private UserType type;
 
