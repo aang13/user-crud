@@ -16,7 +16,7 @@ public class ParentDTO {
     public ParentDTO() {
     }
 
-    public ParentDTO(long id, String firstName, String lastName, String state, String city, long street, long zip, UserType type) {
+    public ParentDTO(Long id, String firstName, String lastName, String state, String city, Long street,Long zip, UserType type) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,11 +27,11 @@ public class ParentDTO {
         this.type = type;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -67,19 +67,19 @@ public class ParentDTO {
         this.city = city;
     }
 
-    public long getStreet() {
+    public Long getStreet() {
         return street;
     }
 
-    public void setStreet(long street) {
+    public void setStreet(Long street) {
         this.street = street;
     }
 
-    public long getZip() {
+    public Long getZip() {
         return zip;
     }
 
-    public void setZip(long zip) {
+    public void setZip(Long zip) {
         this.zip = zip;
     }
 
