@@ -13,7 +13,7 @@ To see the full list of apis browse:
 `http://localhost:8080/swagger-ui.html`
 
 Here are the list of apis.
-![alt text](https://user-images.githubusercontent.com/32796511/101288149-2c1a6100-381f-11eb-803c-50eecf721386.png)
+![alt text](https://user-images.githubusercontent.com/32796511/101308448-0f5c4880-3874-11eb-834c-c36994db6777.png)
 
 **Database**\
 H2 database: in memory database for spring boot application.Note that the in-memory database is volatile, and data will be lost when we restart the application.

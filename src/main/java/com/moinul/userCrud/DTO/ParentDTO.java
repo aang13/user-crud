@@ -2,13 +2,25 @@ package com.moinul.userCrud.DTO;
 
 import com.moinul.userCrud.Common.UserType;
 
+import javax.validation.constraints.Size;
+
 public class ParentDTO {
 
     public Long id;
+
+
+    @Size(max=25)
     private String firstName;
+
+    @Size(max=25)
     private String lastName;
+
+    @Size(max=30)
     private String state;
+
+    @Size(max=30)
     private String city;
+
     private Long street;
     private Long zip;
     private UserType type;

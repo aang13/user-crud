@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -28,10 +29,10 @@ public class UserService {
         this.parentChildRepository=parentChildRepository;
     }
 
-    public User createChildUser(ChildDTO childDTO,Long parentId){
+    public User createChildUser(ChildDTO childDTO){
 
-        User parent=userRepository.findById(parentId).orElseThrow(()->new ResourceNotFoundException("No parent found with this id."));
-        if(parent.getType().equals(UserType.CHILDREN)) throw new ResourceNotFoundException("Children id can not be parent");
+        User parent=userRepository.findById(childDTO.getParentId()).orElseThrow(()->new EntityNotFoundException("No parent found with this id."));
+        if(parent.getType().equals(UserType.CHILDREN)) throw new EntityNotFoundException("Children id can not be parent");
 
 
         User savedUser=new User();
@@ -46,9 +47,15 @@ public class UserService {
 
     public User updateChildUser(ChildDTO childDTO){
 //        User parent=userRepository.findById(childDTO.get()).orElseThrow(()->new ResourceNotFoundException("No parent found with this id."));
-        User user=userRepository.findById(childDTO.getId()).orElseThrow(()->new ResourceNotFoundException("No user found with this id."));
+        User user=userRepository.findById(childDTO.getId()).orElseThrow(()->new EntityNotFoundException("No user found with this id."));
+
+        User parent=userRepository.findById(childDTO.getParentId()).orElseThrow(()->new EntityNotFoundException("No parent user found with this id."));
 
         processChildUser(childDTO,user);
+
+        ParentChild parentChild=parentChildRepository.findOneByUser(user).orElseThrow(()->new EntityNotFoundException("No child record found"));
+        parentChild.setParent(parent);
+        parentChildRepository.save(parentChild);
         return user;
     }
 
@@ -56,7 +63,7 @@ public class UserService {
         user.setFirstName(childDTO.getFirstName());
         user.setLastName(childDTO.getLastName());
         user.setType(childDTO.getType());
-        user=userRepository.save(user);
+        userRepository.save(user);
     }
 
 
@@ -69,7 +76,7 @@ public class UserService {
     }
 
    public User updateParentUser(ParentDTO parentDTO){
-       User user=userRepository.findById(parentDTO.getId()).orElseThrow(()->new ResourceNotFoundException("No user found with id: "+ parentDTO.getId()));
+       User user=userRepository.findById(parentDTO.getId()).orElseThrow(()->new EntityNotFoundException("No user found with id: "+ parentDTO.getId()));
 
        processParentUser(parentDTO,user);
        return userRepository.save(user);
@@ -87,16 +94,16 @@ public class UserService {
    }
 
     public void deleteUser(Long id){
-        User user=userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("No user with id: "+ id));
+        User user=userRepository.findById(id).orElseThrow(()->new EntityNotFoundException("No user with id: "+ id));
         if(user.getType().equals(UserType.CHILDREN)){
-            ParentChild child=parentChildRepository.findOneByUser(user).orElseThrow(()->new ResourceNotFoundException("No student found with for this user "));
+            ParentChild child=parentChildRepository.findOneByUser(user).orElseThrow(()->new EntityNotFoundException("No student found with for this user "));
             parentChildRepository.delete(child);
         }
         else{
             List<ParentChild> children=parentChildRepository.findAllByParent(user);
 
             for (ParentChild child: children ) {
-                User childToDelete=userRepository.findById(child.getUser().getId()).orElseThrow(()->new ResourceNotFoundException("No user with id: "+ child.getUser().getId()));
+                User childToDelete=userRepository.findById(child.getUser().getId()).orElseThrow(()->new EntityNotFoundException("No user with id: "+ child.getUser().getId()));
                 parentChildRepository.delete(child);
                 userRepository.delete(childToDelete);
             }

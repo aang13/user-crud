@@ -28,11 +28,10 @@ public class UserController {
         return userService.createParentUser(parentDTO);
     }
 
-    @PostMapping(value ="user/create/child/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public User createChildUser(@Validated  @RequestBody ChildDTO childDTO,@PathVariable("id")Long parentId)
+    @PostMapping(value ="user/create/child", produces = MediaType.APPLICATION_JSON_VALUE)
+    public User createChildUser(@Validated  @RequestBody ChildDTO childDTO)
     {
-
-        return userService.createChildUser(childDTO,parentId);
+        return userService.createChildUser(childDTO);
     }
 
     @PutMapping(value ="user/update/parent", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -44,7 +43,6 @@ public class UserController {
     @PutMapping(value ="user/update/child", produces = MediaType.APPLICATION_JSON_VALUE)
     public User updateChildUser(@Validated  @RequestBody ChildDTO childDTO)
     {
-
         return userService.updateChildUser(childDTO);
     }
 
