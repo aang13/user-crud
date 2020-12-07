@@ -7,6 +7,7 @@ public final class ErrorConstants {
     public static final String ERR_METHOD_NOT_SUPPORTED = "error.methodNotSupported";
     public static final String ERR_ILLEGAL_ARGUMENT = "error.illegalArgumentException";
     public static final String ERR_ENTITY_NOT_FOUND = "error.entityNotFoundException";
+
     private ErrorConstants() {
     }
 }

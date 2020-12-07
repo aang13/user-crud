@@ -1,6 +1,5 @@
 package com.moinul.userCrud.Service;
 
-import com.moinul.userCrud.Common.ResourceNotFoundException;
 import com.moinul.userCrud.Common.UserType;
 import com.moinul.userCrud.DTO.ChildDTO;
 import com.moinul.userCrud.DTO.ParentDTO;
@@ -24,42 +23,43 @@ public class UserService {
     private ParentChildRepository parentChildRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository,ParentChildRepository parentChildRepository){
-        this.userRepository=userRepository;
-        this.parentChildRepository=parentChildRepository;
+    public UserService(UserRepository userRepository, ParentChildRepository parentChildRepository) {
+        this.userRepository = userRepository;
+        this.parentChildRepository = parentChildRepository;
     }
 
-    public User createChildUser(ChildDTO childDTO){
+    public User createChildUser(ChildDTO childDTO) {
 
-        User parent=userRepository.findById(childDTO.getParentId()).orElseThrow(()->new EntityNotFoundException("No parent found with this id."));
-        if(parent.getType().equals(UserType.CHILDREN)) throw new EntityNotFoundException("Children id can not be parent");
+        User parent = userRepository.findById(childDTO.getParentId()).orElseThrow(() -> new EntityNotFoundException("No parent found with this id."));
+        if (parent.getType().equals(UserType.CHILDREN))
+            throw new EntityNotFoundException("Children id can not be parent");
 
 
-        User savedUser=new User();
-        processChildUser(childDTO,savedUser);
+        User savedUser = new User();
+        processChildUser(childDTO, savedUser);
 
-        ParentChild newChild=new ParentChild();
+        ParentChild newChild = new ParentChild();
         newChild.setUser(savedUser);
         newChild.setParent(parent);
         parentChildRepository.save(newChild);
         return savedUser;
     }
 
-    public User updateChildUser(ChildDTO childDTO){
+    public User updateChildUser(ChildDTO childDTO) {
 //        User parent=userRepository.findById(childDTO.get()).orElseThrow(()->new ResourceNotFoundException("No parent found with this id."));
-        User user=userRepository.findById(childDTO.getId()).orElseThrow(()->new EntityNotFoundException("No user found with this id."));
+        User user = userRepository.findById(childDTO.getId()).orElseThrow(() -> new EntityNotFoundException("No user found with this id."));
 
-        User parent=userRepository.findById(childDTO.getParentId()).orElseThrow(()->new EntityNotFoundException("No parent user found with this id."));
+        User parent = userRepository.findById(childDTO.getParentId()).orElseThrow(() -> new EntityNotFoundException("No parent user found with this id."));
 
-        processChildUser(childDTO,user);
+        processChildUser(childDTO, user);
 
-        ParentChild parentChild=parentChildRepository.findOneByUser(user).orElseThrow(()->new EntityNotFoundException("No child record found"));
+        ParentChild parentChild = parentChildRepository.findOneByUser(user).orElseThrow(() -> new EntityNotFoundException("No child record found"));
         parentChild.setParent(parent);
         parentChildRepository.save(parentChild);
         return user;
     }
 
-    public void processChildUser(ChildDTO childDTO,User user){
+    public void processChildUser(ChildDTO childDTO, User user) {
         user.setFirstName(childDTO.getFirstName());
         user.setLastName(childDTO.getLastName());
         user.setType(childDTO.getType());
@@ -67,43 +67,42 @@ public class UserService {
     }
 
 
-    public User createParentUser(ParentDTO parentDTO){
+    public User createParentUser(ParentDTO parentDTO) {
 
-        User user=new User();
-        processParentUser(parentDTO,user);
+        User user = new User();
+        processParentUser(parentDTO, user);
         return userRepository.save(user);
 
     }
 
-   public User updateParentUser(ParentDTO parentDTO){
-       User user=userRepository.findById(parentDTO.getId()).orElseThrow(()->new EntityNotFoundException("No user found with id: "+ parentDTO.getId()));
+    public User updateParentUser(ParentDTO parentDTO) {
+        User user = userRepository.findById(parentDTO.getId()).orElseThrow(() -> new EntityNotFoundException("No user found with id: " + parentDTO.getId()));
 
-       processParentUser(parentDTO,user);
-       return userRepository.save(user);
-   }
+        processParentUser(parentDTO, user);
+        return userRepository.save(user);
+    }
 
-   public void processParentUser(ParentDTO parentDTO,User user){
-       user.setFirstName(parentDTO.getFirstName());
-       user.setLastName(parentDTO.getLastName());
-       user.setState(parentDTO.getState());
-       user.setCity(parentDTO.getCity());
-       user.setStreet(parentDTO.getStreet());
-       user.setZip(parentDTO.getZip());
-       user.setType(parentDTO.getType());
+    public void processParentUser(ParentDTO parentDTO, User user) {
+        user.setFirstName(parentDTO.getFirstName());
+        user.setLastName(parentDTO.getLastName());
+        user.setState(parentDTO.getState());
+        user.setCity(parentDTO.getCity());
+        user.setStreet(parentDTO.getStreet());
+        user.setZip(parentDTO.getZip());
+        user.setType(parentDTO.getType());
 
-   }
+    }
 
-    public void deleteUser(Long id){
-        User user=userRepository.findById(id).orElseThrow(()->new EntityNotFoundException("No user with id: "+ id));
-        if(user.getType().equals(UserType.CHILDREN)){
-            ParentChild child=parentChildRepository.findOneByUser(user).orElseThrow(()->new EntityNotFoundException("No student found with for this user "));
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("No user with id: " + id));
+        if (user.getType().equals(UserType.CHILDREN)) {
+            ParentChild child = parentChildRepository.findOneByUser(user).orElseThrow(() -> new EntityNotFoundException("No student found with for this user "));
             parentChildRepository.delete(child);
-        }
-        else{
-            List<ParentChild> children=parentChildRepository.findAllByParent(user);
+        } else {
+            List<ParentChild> children = parentChildRepository.findAllByParent(user);
 
-            for (ParentChild child: children ) {
-                User childToDelete=userRepository.findById(child.getUser().getId()).orElseThrow(()->new EntityNotFoundException("No user with id: "+ child.getUser().getId()));
+            for (ParentChild child : children) {
+                User childToDelete = userRepository.findById(child.getUser().getId()).orElseThrow(() -> new EntityNotFoundException("No user with id: " + child.getUser().getId()));
                 parentChildRepository.delete(child);
                 userRepository.delete(childToDelete);
             }
@@ -111,7 +110,7 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    public List<User> getAllUser(){
+    public List<User> getAllUser() {
         return userRepository.findAll();
     }
 }

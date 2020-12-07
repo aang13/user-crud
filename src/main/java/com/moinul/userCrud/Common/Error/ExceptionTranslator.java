@@ -15,7 +15,7 @@ import javax.persistence.EntityNotFoundException;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 
-@ControllerAdvice(basePackages ="com.moinul.userCrud.Controller")
+@ControllerAdvice(basePackages = "com.moinul.userCrud.Controller")
 public class ExceptionTranslator {
 
 
@@ -66,8 +66,6 @@ public class ExceptionTranslator {
     public ErrorDTO processIllegalArgumentException(IllegalArgumentException exception) {
         return new ErrorDTO(ErrorConstants.ERR_ILLEGAL_ARGUMENT, exception.getMessage());
     }
-
-
 
 
     @ExceptionHandler(EntityNotFoundException.class)

@@ -1,7 +1,5 @@
 package com.moinul.userCrud.Model;
 
-import org.hibernate.annotations.GeneratorType;
-
 import javax.persistence.*;
 
 @Entity
@@ -13,7 +11,7 @@ public class ParentChild {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="parent_id")
+    @JoinColumn(name = "parent_id")
     private User parent;
 
     @OneToOne

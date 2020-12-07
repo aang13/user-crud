@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ParentChildRepository extends JpaRepository<ParentChild,Long> {
+public interface ParentChildRepository extends JpaRepository<ParentChild, Long> {
 
     List<ParentChild> findAllByParent(User user);
 

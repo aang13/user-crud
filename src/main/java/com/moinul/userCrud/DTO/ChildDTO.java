@@ -1,24 +1,23 @@
 package com.moinul.userCrud.DTO;
 
 import com.moinul.userCrud.Common.UserType;
-import com.moinul.userCrud.Model.User;
+
 import javax.validation.constraints.Size;
 
 public class ChildDTO {
 
     public Long id;
 
-    @Size(max=25)
+    @Size(max = 25)
     private String firstName;
 
-    @Size(max=25)
+    @Size(max = 25)
     private String lastName;
     private UserType type;
     private Long parentId;
 
     public ChildDTO() {
     }
-
 
 
     public ChildDTO(Long id, String firstName, String lastName, UserType type, Long parentId) {

@@ -13,26 +13,26 @@ public class User {
     private Long id;
 
 
-    @Column(name = "first_name",length = 25)
+    @Column(name = "first_name", length = 25)
     private String firstName;
 
-    @Column(name="last_name",length = 25)
+    @Column(name = "last_name", length = 25)
     private String lastName;
 
-    @Column(name="state",length = 30)
+    @Column(name = "state", length = 30)
     private String state;
 
-    @Column(name="city",length = 30)
+    @Column(name = "city", length = 30)
     private String city;
 
-   @Column(name = "street")
+    @Column(name = "street")
     private Long street;
 
-   @Column(name="zip")
+    @Column(name = "zip")
     private Long zip;
 
-   @Enumerated(EnumType.STRING)
-   @Column(name="type")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
     private UserType type;
 
     public User() {
@@ -51,69 +51,67 @@ public class User {
         this.type = type;
     }
 
-
+    public Long getId() {
+        return id;
+    }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setStreet(Long street) {
-        this.street = street;
-    }
-
-    public void setZip(Long zip) {
-        this.zip = zip;
-    }
-
-    public void setType(UserType type) {
-        this.type = type;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getState() {
         return state;
     }
 
+    public void setState(String state) {
+        this.state = state;
+    }
+
     public String getCity() {
         return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public Long getStreet() {
         return street;
     }
 
+    public void setStreet(Long street) {
+        this.street = street;
+    }
+
     public Long getZip() {
         return zip;
     }
 
+    public void setZip(Long zip) {
+        this.zip = zip;
+    }
+
     public UserType getType() {
         return type;
+    }
+
+    public void setType(UserType type) {
+        this.type = type;
     }
 }

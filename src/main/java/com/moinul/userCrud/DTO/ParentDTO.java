@@ -9,16 +9,16 @@ public class ParentDTO {
     public Long id;
 
 
-    @Size(max=25)
+    @Size(max = 25)
     private String firstName;
 
-    @Size(max=25)
+    @Size(max = 25)
     private String lastName;
 
-    @Size(max=30)
+    @Size(max = 30)
     private String state;
 
-    @Size(max=30)
+    @Size(max = 30)
     private String city;
 
     private Long street;
@@ -28,7 +28,7 @@ public class ParentDTO {
     public ParentDTO() {
     }
 
-    public ParentDTO(Long id, String firstName, String lastName, String state, String city, Long street,Long zip, UserType type) {
+    public ParentDTO(Long id, String firstName, String lastName, String state, String city, Long street, Long zip, UserType type) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
